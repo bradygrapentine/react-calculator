@@ -2,52 +2,99 @@ import { React, useState } from 'react'
 // import { Buttons } from './components/Buttons'
 
 export function App() {
-  let [current, setCurrent] = useState('0')
-  let [base, setBase] = useState(0)
+  let [display, setDisplay] = useState('0')
+  let [current, setCurrent] = useState(0)
+  let [result, setResult] = useState(0)
+  let [operator, setOperator] = useState('')
 
   function setNum(event) {
-    setCurrent(
-      current === '0'
-        ? event.target.textContent === '.'
-          ? (current += event.target.textContent)
-          : event.target.textContent
-        : (current += event.target.textContent)
-    )
+    if (display === '0') {
+      event.target.textContent === '.'
+        ? setDisplay((display += event.target.textContent))
+        : setDisplay(event.target.textContent)
+    } else if ((display = 'TEST')) {
+      event.target.textContent === '.'
+        ? setDisplay((display += event.target.textContent))
+        : setDisplay(event.target.textContent)
+      event.target.visibility = 'visible'
+    } else if (parseFloat(display) === result) {
+      setDisplay(event.target.textContent)
+      setResult(0)
+    }
   }
 
   function clickOperation(event) {
     switch (event.target.textContent) {
       case '+':
-        setBase((base += parseFloat(current)))
+        setOperator('+')
+        setResult(parseFloat(display))
+        setDisplay('TEST')
         break
-      case '&minus;':
-        setBase((base += parseFloat(current)))
+      case '-':
+        setOperator('-')
+        setResult(parseFloat(display))
+        setDisplay('TEST')
         break
-      case '&times;':
-        setBase((base += parseFloat(current)))
+      case 'x':
+        setOperator('x')
+        setResult(parseFloat(display))
+        setDisplay('TEST')
         break
-      case '&divide;':
+      case '/':
+        setOperator('/')
+        setResult(parseFloat(display))
+        setDisplay('TEST')
         break
       case '=':
+        // if (display === ' 0' && (operator === '-' || operator === '+')) {
+        //   setDisplay(result.toString())
+        // } else if (display === ' 0' && (operator === '/' || operator === 'x')) {
+        //   setDisplay('0')
+        //   setResult(0)
+        // }
+        switch (operator) {
+          case '/':
+            setResult((result /= parseFloat(display)))
+            setDisplay(result.toString())
+            break
+          case 'x':
+            setResult((result *= parseFloat(display)))
+            setDisplay(result.toString())
+            break
+          case '-':
+            setResult((result -= parseFloat(display)))
+            setDisplay(result.toString())
+            break
+          case '+':
+            setResult((result += parseFloat(display)))
+            setDisplay(result.toString())
+            break
+          case '=':
+            setResult(0)
+            setDisplay('0')
+            break
+        }
+        setOperator('=')
         break
     }
   }
 
   function clearAll() {
-    setCurrent('0')
+    setDisplay('0')
+    setResult(0)
   }
 
   return (
     <>
       <main>
         <div className="calculator">
-          <div className="display">{current}</div>
+          <div className="display">{display}</div>
           <div className="buttons">
             <button onClick={clearAll} className="button clear">
               AC
             </button>
-            <button onClick={clearAll} className="button divide">
-              &divide;
+            <button onClick={clickOperation} className="button divide">
+              /
             </button>
             <button onClick={setNum} className="button seven">
               7
@@ -58,8 +105,8 @@ export function App() {
             <button onClick={setNum} className="button nine">
               9
             </button>
-            <button onClick={clearAll} className="button multiply">
-              &times;
+            <button onClick={clickOperation} className="button multiply">
+              x
             </button>
             <button onClick={setNum} className="button four">
               4
@@ -70,8 +117,8 @@ export function App() {
             <button onClick={setNum} className="button six">
               6
             </button>
-            <button onClick={clearAll} className="button minus">
-              &minus;
+            <button onClick={clickOperation} className="button minus">
+              -
             </button>
             <button onClick={setNum} className="button one">
               1
@@ -82,7 +129,7 @@ export function App() {
             <button onClick={setNum} className="button three">
               3
             </button>
-            <button onClick={setNum} className="button plus">
+            <button onClick={clickOperation} className="button plus">
               +
             </button>
             <button onClick={setNum} className="button zero">
@@ -91,7 +138,7 @@ export function App() {
             <button onClick={setNum} className="button decimal">
               .
             </button>
-            <button onClick={clearAll} className="button equals">
+            <button onClick={clickOperation} className="button equals">
               =
             </button>
           </div>
