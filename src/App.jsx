@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
-// import { Buttons } from './components/Buttons'
-
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 export function App() {
   let [display, setDisplay] = useState('0')
   let [currentOperator, setCurrentOperator] = useState('')
@@ -9,6 +10,12 @@ export function App() {
   let [operator, setOperator] = useState('')
   let [resetDisplay, setResetDisplay] = useState(false)
   let [iterating, setIterating] = useState(false)
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
   let operation = {
     '+': (oldResult, newNumber) => {
       return oldResult + newNumber
@@ -27,8 +34,26 @@ export function App() {
       let newResult = operation[currentOperator](oldResult, currentNumAsFloat)
       return newResult
     },
-    // operation[event.target.textContent](result, displayAsFloat) == 3;
   }
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  function handleOperation(symbol) {
+    setIterating(false)
+    if (result && operator !== '=') {
+      let displayAsFloat = parseFloat(display)
+      let newResult = operation[operator](result, displayAsFloat)
+      setResult(newResult)
+    } else {
+      setResult(parseFloat(display))
+    }
+    setDisplay('0')
+    setOperator(symbol)
+    setCurrentOperator(symbol)
+  }
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
   function setNum(event) {
     if (operator === '=') {
       if (resetDisplay === true) {
@@ -49,60 +74,22 @@ export function App() {
       setDisplay((display += event.target.textContent))
     }
   }
-
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
   function clickOperation(event) {
     switch (event.target.textContent) {
       case '+':
-        setIterating(false)
-        if (result && operator !== '=') {
-          let displayAsFloat = parseFloat(display)
-          let newResult = operation[operator](result, displayAsFloat)
-          setResult(newResult)
-        } else {
-          setResult(parseFloat(display))
-        }
-        setOperator('+')
-        setCurrentOperator('+')
-        setDisplay('0')
+        handleOperation('+')
         break
       case '-':
-        setIterating(false)
-        if (result && operator !== '=') {
-          let displayAsFloat = parseFloat(display)
-          let newResult = operation[operator](result, displayAsFloat)
-          setResult(newResult)
-        } else {
-          setResult(parseFloat(display))
-        }
-        setOperator('-')
-        setCurrentOperator('-')
-        setDisplay('0')
+        handleOperation('-')
         break
       case 'x':
-        setIterating(false)
-        if (result && operator !== '=') {
-          let displayAsFloat = parseFloat(display)
-          let newResult = operation[operator](result, displayAsFloat)
-          setResult(newResult)
-        } else {
-          setResult(parseFloat(display))
-        }
-        setOperator('x')
-        setCurrentOperator('x')
-        setDisplay('0')
+        handleOperation('x')
         break
       case '/':
-        setIterating(false)
-        if (result && operator !== '=') {
-          let displayAsFloat = parseFloat(display)
-          let newResult = operation[operator](result, displayAsFloat)
-          setResult(newResult)
-        } else {
-          setResult(parseFloat(display))
-        }
-        setOperator('/')
-        setCurrentOperator('/')
-        setDisplay('0')
+        handleOperation('/')
         break
       case '=':
         if (iterating === false) {
@@ -123,7 +110,9 @@ export function App() {
         break
     }
   }
-
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
   function clearAll() {
     setDisplay('0')
     setResult(null)
@@ -131,7 +120,12 @@ export function App() {
     setCurrentOperator('')
     setCurrentNum(null)
   }
-
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
   return (
     <>
       <main>
