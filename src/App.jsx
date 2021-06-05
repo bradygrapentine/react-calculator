@@ -3,85 +3,133 @@ import { React, useState } from 'react'
 
 export function App() {
   let [display, setDisplay] = useState('0')
-  let [current, setCurrent] = useState(0)
-  let [result, setResult] = useState(0)
+  let [currentOperator, setCurrentOperator] = useState('')
+  let [currentNum, setCurrentNum] = useState(null)
+  let [result, setResult] = useState(null)
   let [operator, setOperator] = useState('')
-
+  let [resetDisplay, setResetDisplay] = useState(false)
+  let [iterating, setIterating] = useState(false)
+  let operation = {
+    '+': (oldResult, newNumber) => {
+      return oldResult + newNumber
+    },
+    '-': (oldResult, newNumber) => {
+      return oldResult - newNumber
+    },
+    '/': (oldResult, newNumber) => {
+      return oldResult / newNumber
+    },
+    x: (oldResult, newNumber) => {
+      return oldResult * newNumber
+    },
+    '=': (oldResult) => {
+      let currentNumAsFloat = parseFloat(currentNum)
+      let newResult = operation[currentOperator](oldResult, currentNumAsFloat)
+      return newResult
+    },
+    // operation[event.target.textContent](result, displayAsFloat) == 3;
+  }
   function setNum(event) {
-    if (display === '0') {
+    if (operator === '=') {
+      if (resetDisplay === true) {
+        setDisplay(event.target.textContent)
+        let newResult = parseFloat(event.target.textContent)
+        setResult(newResult)
+        setResetDisplay(false)
+      } else {
+        setDisplay((display += event.target.textContent))
+        let newResult = parseFloat(display)
+        setResult(newResult)
+      }
+    } else if (display === '0') {
       event.target.textContent === '.'
         ? setDisplay((display += event.target.textContent))
         : setDisplay(event.target.textContent)
-    } else if ((display = 'TEST')) {
-      event.target.textContent === '.'
-        ? setDisplay((display += event.target.textContent))
-        : setDisplay(event.target.textContent)
-      event.target.visibility = 'visible'
-    } else if (parseFloat(display) === result) {
-      setDisplay(event.target.textContent)
-      setResult(0)
+    } else {
+      setDisplay((display += event.target.textContent))
     }
   }
 
   function clickOperation(event) {
     switch (event.target.textContent) {
       case '+':
+        setIterating(false)
+        if (result && operator !== '=') {
+          let displayAsFloat = parseFloat(display)
+          let newResult = operation[operator](result, displayAsFloat)
+          setResult(newResult)
+        } else {
+          setResult(parseFloat(display))
+        }
         setOperator('+')
-        setResult(parseFloat(display))
-        setDisplay('TEST')
+        setCurrentOperator('+')
+        setDisplay('0')
         break
       case '-':
+        setIterating(false)
+        if (result && operator !== '=') {
+          let displayAsFloat = parseFloat(display)
+          let newResult = operation[operator](result, displayAsFloat)
+          setResult(newResult)
+        } else {
+          setResult(parseFloat(display))
+        }
         setOperator('-')
-        setResult(parseFloat(display))
-        setDisplay('TEST')
+        setCurrentOperator('-')
+        setDisplay('0')
         break
       case 'x':
+        setIterating(false)
+        if (result && operator !== '=') {
+          let displayAsFloat = parseFloat(display)
+          let newResult = operation[operator](result, displayAsFloat)
+          setResult(newResult)
+        } else {
+          setResult(parseFloat(display))
+        }
         setOperator('x')
-        setResult(parseFloat(display))
-        setDisplay('TEST')
+        setCurrentOperator('x')
+        setDisplay('0')
         break
       case '/':
+        setIterating(false)
+        if (result && operator !== '=') {
+          let displayAsFloat = parseFloat(display)
+          let newResult = operation[operator](result, displayAsFloat)
+          setResult(newResult)
+        } else {
+          setResult(parseFloat(display))
+        }
         setOperator('/')
-        setResult(parseFloat(display))
-        setDisplay('TEST')
+        setCurrentOperator('/')
+        setDisplay('0')
         break
       case '=':
-        // if (display === ' 0' && (operator === '-' || operator === '+')) {
-        //   setDisplay(result.toString())
-        // } else if (display === ' 0' && (operator === '/' || operator === 'x')) {
-        //   setDisplay('0')
-        //   setResult(0)
-        // }
-        switch (operator) {
-          case '/':
-            setResult((result /= parseFloat(display)))
-            setDisplay(result.toString())
-            break
-          case 'x':
-            setResult((result *= parseFloat(display)))
-            setDisplay(result.toString())
-            break
-          case '-':
-            setResult((result -= parseFloat(display)))
-            setDisplay(result.toString())
-            break
-          case '+':
-            setResult((result += parseFloat(display)))
-            setDisplay(result.toString())
-            break
-          case '=':
-            setResult(0)
-            setDisplay('0')
-            break
+        if (iterating === false) {
+          setCurrentNum(display)
+          setIterating(true)
         }
+        let displayAsFloat = parseFloat(display)
+        let newResult = 0
+        if (operator === '=') {
+          newResult = operation['='](result)
+        } else {
+          newResult = operation[operator](result, displayAsFloat)
+        }
+        setResult(newResult)
+        setDisplay(newResult.toString())
         setOperator('=')
+        setResetDisplay(true)
         break
     }
   }
 
   function clearAll() {
     setDisplay('0')
-    setResult(0)
+    setResult(null)
+    setOperator('')
+    setCurrentOperator('')
+    setCurrentNum(null)
   }
 
   return (

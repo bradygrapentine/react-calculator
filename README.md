@@ -25,13 +25,23 @@ Explorer Mode
 
     - As a user, I should be able to add two numbers
 
+<!-- DONE -->
+
     - As a user, I should be able to subtract numbers
+
+<!-- DONE -->
 
     - As a user, I should be able to add multiple numbers
 
+<!-- DONE -->
+
     - As a user, I should be able to divide numbers
 
+<!-- DONE -->
+
     - The clear button should reset the current calculation
+
+<!-- DONE -->
 
 Adventure Mode
 
