@@ -27,6 +27,7 @@ export function App() {
       return oldResult / newNumber
     },
     x: (oldResult, newNumber) => {
+      // not sure what's going on here, but it deletes the single quotes around 'x' when I save and multiplication works fine
       return oldResult * newNumber
     },
     '=': (oldResult) => {
