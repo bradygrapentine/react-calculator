@@ -10,6 +10,7 @@ export function App() {
   let [operator, setOperator] = useState('')
   let [resetDisplay, setResetDisplay] = useState(false)
   let [iterating, setIterating] = useState(false)
+  let [displayList, setDisplayList] = useState([])
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
@@ -48,9 +49,11 @@ export function App() {
     } else {
       setResult(parseFloat(display))
     }
-    setDisplay('0')
     setOperator(symbol)
     setCurrentOperator(symbol)
+    let newDisplayList = [...displayList, operator, display]
+    setDisplayList(newDisplayList)
+    setDisplay('0')
   }
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
@@ -89,6 +92,14 @@ export function App() {
       case 'x':
         handleOperation('x')
         break
+      // try {
+      //   handleOperation('x')
+      // } catch (error) {
+      //   clearAll()
+      //   setDisplay('ERROR')
+      //   setResetDisplay(true)
+      // }
+      // break
       case '/':
         handleOperation('/')
         break
@@ -104,6 +115,8 @@ export function App() {
         } else {
           newResult = operation[operator](result, displayAsFloat)
         }
+        let newDisplayList = [...displayList, operator, display]
+        setDisplayList(newDisplayList)
         setResult(newResult)
         setDisplay(newResult.toString())
         setOperator('=')
@@ -131,6 +144,7 @@ export function App() {
     <>
       <main>
         <div className="calculator">
+          <div className="displayList">{displayList}</div>
           <div className="display">{display}</div>
           <div className="buttons">
             <button onClick={clearAll} className="button clear">
