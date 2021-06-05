@@ -43,6 +43,16 @@ Explorer Mode
 
 <!-- DONE -->
 
+<!--
+
+update display when result known during performance of normal operations (not incrementing) instead of displaying zero to match the apple calculator
+
+add guard clauses for incorrect input -> more than one decimal point
+
+, then move on to adventure mode
+
+ -->
+
 Adventure Mode
 
     - Show the user their history in a list
