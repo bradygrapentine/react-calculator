@@ -217,6 +217,8 @@ export function App() {
   return (
     <>
       <main>
+        {/* <form> */}
+        {/* might add a form around the calculator or display for the on submit feature */}
         <div className="calculator">
           <section>
             <div className="displayList">{displayList}</div>
@@ -282,6 +284,7 @@ export function App() {
             </button>
           </div>
         </div>
+        {/* </form> */}
       </main>
     </>
   )
