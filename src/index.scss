@@ -18,16 +18,24 @@ main {
   background-color: #393b2f;
 }
 
-// .calculator {
-//   max-height: 100vh;
-// }
+section {
+  height: 112px;
+}
 
 .display {
-  padding: 20.25px 24px;
-  font-size: 72px;
+  // padding: 0px 24px 0px 20.25px;
+  padding-top: 0.85rem;
+  margin-right: 24px;
+  font-size: 70px;
   color: white;
   background-color: #393b2f;
   text-align: end;
+}
+
+.displayList {
+  text-align: end;
+  padding-top: 0.5rem;
+  margin-right: 28px;
 }
 
 .buttons {
