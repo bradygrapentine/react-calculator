@@ -20,21 +20,25 @@ export function App() {
   //------------------------------------------------------------------------------------------
   let operation = {
     '+': (oldResult, newNumber) => {
-      return oldResult + newNumber
+      return parseFloat(oldResult) + parseFloat(newNumber)
     },
     '-': (oldResult, newNumber) => {
-      return oldResult - newNumber
+      return parseFloat(oldResult) - parseFloat(newNumber)
     },
     '/': (oldResult, newNumber) => {
-      return oldResult / newNumber
+      return parseFloat(oldResult) / parseFloat(newNumber)
     },
     x: (oldResult, newNumber) => {
       // not sure what's going on here, but it deletes the single quotes around 'x' when I save and multiplication works fine
-      return oldResult * newNumber
+      return parseFloat(oldResult) * parseFloat(newNumber)
     },
     '=': (oldResult) => {
       let currentNumAsFloat = parseFloat(currentNum)
-      let newResult = operation[currentOperator](oldResult, currentNumAsFloat)
+      let oldResultAsFloat = parseFloat(oldResult)
+      let newResult = operation[currentOperator](
+        oldResultAsFloat,
+        currentNumAsFloat
+      )
       return newResult
     },
   }
@@ -47,26 +51,28 @@ export function App() {
       let displayAsFloat = parseFloat(display)
       let newResult = operation[operator](result, displayAsFloat)
       setResult(newResult)
-      let newDisplayList = [...displayList, ' ', display, ' ', symbol]
+      let newDisplayList = [...displayList, ' ', displayAsFloat, ' ', symbol]
       setDisplayList(newDisplayList)
     } else if (result && symbol != '=') {
       let newDisplayList = [result, ' ', symbol]
       setDisplayList(newDisplayList)
     } else {
-      setResult(parseFloat(display))
-      let newDisplayList = [...displayList, ' ', display, ' ', symbol]
+      let displayAsFloat = parseFloat(display)
+      setResult(displayAsFloat)
+      let newDisplayList = [...displayList, ' ', displayAsFloat, ' ', symbol]
       setDisplayList(newDisplayList)
     }
     setOperator(symbol)
     setCurrentOperator(symbol)
     setDisplay('0')
+    setPeriodPresent(false)
   }
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   function checkPeriod(e) {
     if (e.target.textContent == '.' && periodPresent) {
-      setDisplay('error')
+      setDisplay('ERROR')
       setDisplayList([])
       setResult(null)
       setOperator('')
@@ -103,10 +109,12 @@ export function App() {
       event.target.textContent === '.'
         ? setDisplay((display += event.target.textContent))
         : setDisplay(event.target.textContent)
-    } else if (display === 'error') {
+      checkPeriod(event)
+    } else if (display === 'ERROR') {
       event.target.textContent === '.'
         ? setDisplay('0' + event.target.textContent)
         : setDisplay(event.target.textContent)
+      checkPeriod(event)
     } else {
       setDisplay((display += event.target.textContent))
       checkPeriod(event)
@@ -126,22 +134,13 @@ export function App() {
       case 'x':
         handleOperation('x')
         break
-      //
-      // try {
-      //   handleOperation('x')
-      // } catch (error) {
-      //   clearAll()
-      //   setDisplay('ERROR')
-      //   setResetDisplay(true)
-      // }
-      // break
-      //
       case '/':
         handleOperation('/')
         break
       case '=':
         if (iterating === false) {
-          setCurrentNum(display)
+          let displayAsFloat = parseFloat(display)
+          setCurrentNum(displayAsFloat)
           setIterating(true)
         }
         let displayAsFloat = parseFloat(display)
@@ -159,20 +158,21 @@ export function App() {
           setDisplayList(newDisplayList)
         } else {
           newResult = operation[operator](result, displayAsFloat)
-          let newDisplayList = [...displayList, ' ', display, ' =']
+          let newDisplayList = [...displayList, ' ', displayAsFloat, ' =']
           setDisplayList(newDisplayList)
         }
         setResult(newResult)
         setDisplay(newResult.toString())
         setOperator('=')
         setResetDisplay(true)
+        setPeriodPresent(false)
         break
     }
   }
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
-  function clearAll() {
+  function reset() {
     setDisplay('0')
     setDisplayList([])
     setResult(null)
@@ -186,6 +186,31 @@ export function App() {
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
+  function toggleSign() {
+    if (operator !== '=') {
+      let newDisplay = -1 * parseFloat(display)
+      if (!(Math.floor(newDisplay) === newDisplay)) {
+        setDisplay(newDisplay.toString())
+      } else if (newDisplay === 0) {
+        setDisplay(newDisplay.toString())
+      } else if (periodPresent) {
+        setDisplay(newDisplay.toString() + '.')
+      } else {
+        setDisplay(newDisplay.toString())
+      }
+    }
+  }
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------
+  function clearDisplay() {
+    if (operator === '=') {
+      reset()
+    } else {
+      setDisplay('0')
+      setPeriodPresent(false)
+    }
+  }
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
@@ -198,8 +223,14 @@ export function App() {
             <div className="display">{display}</div>
           </section>
           <div className="buttons">
-            <button onClick={clearAll} className="button clear">
+            <button onClick={reset} className="button reset">
               AC
+            </button>
+            <button onClick={clearDisplay} className="button clear">
+              C
+            </button>
+            <button onClick={toggleSign} className="button toggleSign">
+              +/-
             </button>
             <button onClick={clickOperation} className="button divide">
               /

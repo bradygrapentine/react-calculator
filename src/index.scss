@@ -11,6 +11,7 @@ html {
 body {
   margin: 0;
   min-height: 100%;
+  background-color: #393b2f;
 }
 
 main {
@@ -44,7 +45,7 @@ section {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    'clear clear clear divide'
+    'reset clear toggleSign divide'
     'seven eight nine multiply'
     'four five six minus'
     'one two three plus'
@@ -62,10 +63,22 @@ section {
   color: white;
   font-size: 34px;
 }
+.reset {
+  grid-area: reset;
+  background-color: #4c4d42;
+  justify-content: center;
+  padding: 0rem 0.75rem;
+}
 .clear {
   grid-area: clear;
   background-color: #4c4d42;
-  justify-content: start;
+  justify-content: center;
+  padding: 0rem 0.75rem;
+}
+.toggleSign {
+  grid-area: toggleSign;
+  background-color: #4c4d42;
+  justify-content: center;
   padding: 0rem 0.75rem;
 }
 .divide {
