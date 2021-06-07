@@ -156,16 +156,24 @@ export function App() {
             ' =',
           ]
           setDisplayList(newDisplayList)
+          setResult(newResult)
+          setDisplay(newResult.toString())
+          setOperator('=')
+          setResetDisplay(true)
+          setPeriodPresent(false)
+        } else if (operator === '') {
+          setIterating(false)
+          return
         } else {
           newResult = operation[operator](result, displayAsFloat)
           let newDisplayList = [...displayList, ' ', displayAsFloat, ' =']
           setDisplayList(newDisplayList)
+          setResult(newResult)
+          setDisplay(newResult.toString())
+          setOperator('=')
+          setResetDisplay(true)
+          setPeriodPresent(false)
         }
-        setResult(newResult)
-        setDisplay(newResult.toString())
-        setOperator('=')
-        setResetDisplay(true)
-        setPeriodPresent(false)
         break
     }
   }
@@ -198,6 +206,18 @@ export function App() {
       } else {
         setDisplay(newDisplay.toString())
       }
+    } else {
+      let newDisplay = -1 * parseFloat(display)
+      if (!(Math.floor(newDisplay) === newDisplay)) {
+        setDisplay(newDisplay.toString())
+      } else if (newDisplay === 0) {
+        setDisplay(newDisplay.toString())
+      } else if (periodPresent) {
+        setDisplay(newDisplay.toString() + '.')
+      } else {
+        setDisplay(newDisplay.toString())
+      }
+      setResult(newDisplay)
     }
   }
   //------------------------------------------------------------------------------------------
