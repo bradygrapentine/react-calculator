@@ -44,7 +44,6 @@ Explorer Mode
 
 <!-- DONE
 
-update display when result known during performance of normal operations (not incrementing) instead of displaying zero to match the apple calculator
 
 add guard clauses for incorrect input -> more than one decimal point
 
@@ -58,10 +57,16 @@ Adventure Mode
 
     - Be able to chain together results. For example, the user should be able to input 2 + 3 - 4 + 5 and get the correct answer
 
-<!-- DONE
+<!-- DONE -->
 
-    - Let the user use their keyboard in addition to the mouse
+<!-- - Let the user use their keyboard in addition to the mouse -->
 
-Epic Mode
+<!-- Epic Mode -->
 
-    - Using your systems calculator app as inspiration, implement as many features as you can, including, but not limited to scientific mode, exponents, and the order of operations. -->
+<!-- Using your systems calculator app as inspiration, implement as many features as you can, including, but not limited to scientific mode, exponents, and the order of operations. -->
+
+<!-- update display when result known during performance of normal operations (not incrementing) instead of displaying zero to match the apple calculator -->
+
+<!-- use before in css to change display symbols -->
+
+<!-- DONE -->

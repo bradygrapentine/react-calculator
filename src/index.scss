@@ -84,7 +84,13 @@ section {
 .divide {
   grid-area: divide;
   background-color: #f3a23b;
+  font-size: 0;
 }
+.divide::before {
+  content: '÷';
+  font-size: 34px;
+}
+
 .seven {
   grid-area: seven;
 }
@@ -97,7 +103,13 @@ section {
 .multiply {
   grid-area: multiply;
   background-color: #f3a23b;
+  font-size: 0;
 }
+.multiply::before {
+  content: '×';
+  font-size: 34px;
+}
+
 .four {
   grid-area: four;
 }
@@ -110,6 +122,11 @@ section {
 .minus {
   grid-area: minus;
   background-color: #f3a23b;
+  font-size: 0;
+}
+.minus::before {
+  content: '−';
+  font-size: 34px;
 }
 .one {
   grid-area: one;

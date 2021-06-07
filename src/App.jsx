@@ -25,7 +25,7 @@ export function App() {
     '-': (oldResult, newNumber) => {
       return parseFloat(oldResult) - parseFloat(newNumber)
     },
-    '/': (oldResult, newNumber) => {
+    '÷': (oldResult, newNumber) => {
       return parseFloat(oldResult) / parseFloat(newNumber)
     },
     x: (oldResult, newNumber) => {
@@ -125,6 +125,7 @@ export function App() {
   //------------------------------------------------------------------------------------------
   function clickOperation(event) {
     switch (event.target.textContent) {
+      // could use innerText instead of textContent, same effect
       case '+':
         handleOperation('+')
         break
@@ -135,7 +136,7 @@ export function App() {
         handleOperation('x')
         break
       case '/':
-        handleOperation('/')
+        handleOperation('÷')
         break
       case '=':
         if (iterating === false) {
@@ -252,7 +253,7 @@ export function App() {
               C
             </button>
             <button onClick={toggleSign} className="button toggleSign">
-              +/-
+              +/−
             </button>
             <button onClick={clickOperation} className="button divide">
               /
