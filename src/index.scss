@@ -14,17 +14,13 @@ body {
   background-color: #393b2f;
 }
 
-main {
-  height: 100vh;
-  background-color: #393b2f;
-}
-
 section {
   height: 112px;
 }
 
 .display {
   // padding: 0px 24px 0px 20.25px;
+  height: 20vh;
   padding-top: 0.85rem;
   margin-right: 24px;
   font-size: 70px;
@@ -42,6 +38,7 @@ section {
 .buttons {
   height: 80vh;
   display: grid;
+  height: fit-content;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
@@ -53,7 +50,7 @@ section {
 }
 
 .button {
-  height: auto;
+  height: 16vh;
   background-color: rgb(136, 136, 136);
   display: flex;
   justify-content: center;

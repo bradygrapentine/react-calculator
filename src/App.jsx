@@ -139,7 +139,7 @@ export function App() {
         handleOperation('÷')
         break
       case '=':
-        if (iterating === false) {
+        if (iterating === false && operator !== '') {
           let displayAsFloat = parseFloat(display)
           setCurrentNum(displayAsFloat)
           setIterating(true)
@@ -162,9 +162,6 @@ export function App() {
           setOperator('=')
           setResetDisplay(true)
           setPeriodPresent(false)
-        } else if (operator === '') {
-          setIterating(false)
-          return
         } else {
           newResult = operation[operator](result, displayAsFloat)
           let newDisplayList = [...displayList, ' ', displayAsFloat, ' =']
@@ -225,88 +222,87 @@ export function App() {
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   function clearDisplay() {
-    if (operator === '=') {
-      reset()
-    } else {
-      setDisplay('0')
-      setPeriodPresent(false)
+    // if (operator === '=') {
+    //   reset()
+    // } else {
+    setDisplay('0')
+    setPeriodPresent(false)
+    if (iterating) {
+      setResult(0)
     }
+    // }
   }
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------
   return (
     <>
-      <main>
-        {/* <form> */}
-        {/* might add a form around the calculator or display for the on submit feature */}
-        <div className="calculator">
-          <section>
-            <div className="displayList">{displayList}</div>
-            <div className="display">{display}</div>
-          </section>
-          <div className="buttons">
-            <button onClick={reset} className="button reset">
-              AC
-            </button>
-            <button onClick={clearDisplay} className="button clear">
-              C
-            </button>
-            <button onClick={toggleSign} className="button toggleSign">
-              +/−
-            </button>
-            <button onClick={clickOperation} className="button divide">
-              /
-            </button>
-            <button onClick={setNum} className="button seven">
-              7
-            </button>
-            <button onClick={setNum} className="button eight">
-              8
-            </button>
-            <button onClick={setNum} className="button nine">
-              9
-            </button>
-            <button onClick={clickOperation} className="button multiply">
-              x
-            </button>
-            <button onClick={setNum} className="button four">
-              4
-            </button>
-            <button onClick={setNum} className="button five">
-              5
-            </button>
-            <button onClick={setNum} className="button six">
-              6
-            </button>
-            <button onClick={clickOperation} className="button minus">
-              -
-            </button>
-            <button onClick={setNum} className="button one">
-              1
-            </button>
-            <button onClick={setNum} className="button two">
-              2
-            </button>
-            <button onClick={setNum} className="button three">
-              3
-            </button>
-            <button onClick={clickOperation} className="button plus">
-              +
-            </button>
-            <button onClick={setNum} className="button zero">
-              0
-            </button>
-            <button onClick={setNum} className="button decimal">
-              .
-            </button>
-            <button onClick={clickOperation} className="button equals">
-              =
-            </button>
-          </div>
-        </div>
-        {/* </form> */}
-      </main>
+      {/* <form> */}
+      {/* might add a form around the calculator or display for the on submit feature */}
+      <section>
+        <div className="displayList">{displayList}</div>
+        <div className="display">{display}</div>
+      </section>
+      <div className="buttons">
+        <button onClick={reset} className="button reset">
+          AC
+        </button>
+        <button onClick={clearDisplay} className="button clear">
+          C
+        </button>
+        <button onClick={toggleSign} className="button toggleSign">
+          +/−
+        </button>
+        <button onClick={clickOperation} className="button divide">
+          /
+        </button>
+        <button onClick={setNum} className="button seven">
+          7
+        </button>
+        <button onClick={setNum} className="button eight">
+          8
+        </button>
+        <button onClick={setNum} className="button nine">
+          9
+        </button>
+        <button onClick={clickOperation} className="button multiply">
+          x
+        </button>
+        <button onClick={setNum} className="button four">
+          4
+        </button>
+        <button onClick={setNum} className="button five">
+          5
+        </button>
+        <button onClick={setNum} className="button six">
+          6
+        </button>
+        <button onClick={clickOperation} className="button minus">
+          -
+        </button>
+        <button onClick={setNum} className="button one">
+          1
+        </button>
+        <button onClick={setNum} className="button two">
+          2
+        </button>
+        <button onClick={setNum} className="button three">
+          3
+        </button>
+        <button onClick={clickOperation} className="button plus">
+          +
+        </button>
+        <button onClick={setNum} className="button zero">
+          0
+        </button>
+        <button onClick={setNum} className="button decimal">
+          .
+        </button>
+        <button onClick={clickOperation} className="button equals">
+          =
+        </button>
+      </div>
+      {/* </form> */}
     </>
   )
 }
