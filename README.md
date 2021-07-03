@@ -4,6 +4,10 @@
 
 ![](./src/images/CaptureReactCalc.PNG)
 
+This is a hooks-based calculator that I made for an assignment at Suncoast Developers Guild. It was a lot of fun to work with and figure out how to manipulate all the different state variables while building this. 
+
+I was able to emulate the iteration features in a standard apple calculator on top of the standard functionality, so give it a try and compare it to your iPhone's calculator (if you have one).
+
 <!--
 ![SDG](./docs/button.png)
 
